@@ -1,3 +1,34 @@
+.button {
+	cursor: pointer;
+}
+
+.button:hover {
+	color: blue;
+	text-decoration: underline;
+}
+
+.reg-button {
+	margin-right: 8px;
+}
+
+.buttons-container {
+	margin-bottom: 8px;
+}
+
+.form-container {
+	display: none;
+}
+
+.form-container label span {
+	width: 64px;
+    display: inline-block;
+}
+
+.form-container form div {
+	margin-bottom: 8px;
+}
+
+/*
 .reg {
 	float:left;
 }
@@ -33,4 +64,4 @@ form div input{
 
 .showPanel {
 	display:block;
-}
+}*/
