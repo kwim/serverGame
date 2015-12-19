@@ -1,7 +1,8 @@
 $(function(){
     var showForm = function(isReg){
-        $('.form-container').show().attr('/auth/' + (isReg ? 'signup' : 'signin'));
-        $('.form-button').text(isReg ? 'Зарегистрироваться' : 'Вход');
+        $('.form-container').show();
+        $('.form').attr('action', '/auth/' + (isReg ? 'signup' : 'signin'));
+        $('.form-button').text(isReg ? 'Р—Р°СЂРµРіРµСЃС‚СЂРёСЂРѕРІР°С‚СЊСЃСЏ' : 'Р’РѕР№С‚Рё');
     };
     $('.reg-button').click(function(){
         showForm(true);

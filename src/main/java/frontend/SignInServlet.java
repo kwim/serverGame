@@ -19,25 +19,23 @@ public class SignInServlet  extends HttpServlet {
         this.accountService = accountService;
     }
 
-    public void doGet(HttpServletRequest request,
-                      HttpServletResponse response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setStatus(HttpServletResponse.SC_OK);
-
         Map<String, Object> pageVariables = new HashMap<String,Object>();
-        pageVariables.put("login", request.getParameter("login") != null
-                ? request.getParameter("login") : "");
-        pageVariables.put("password", request.getParameter("password") != null
-                ?  request.getParameter("password") : "");
+
+        pageVariables.put("login", request.getParameter("login") != null ? request.getParameter("login") : "");
+        pageVariables.put("password", request.getParameter("password") != null ?  request.getParameter("password") : "");
+
         response.getWriter().println(PageGenerator.getPage("authresponse.txt", pageVariables));
     }
 
-    public void doPost(HttpServletRequest request,
-                       HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         response.setStatus(HttpServletResponse.SC_OK);
         Map<String, Object> pageVariables = new HashMap<String, Object>();
         UserProfile profile = accountService.getUser(login);
+
         if (profile != null && profile.getPassword().equals(password)) {
             pageVariables.put("loginStatus", "You have successfully logged");
         } else {

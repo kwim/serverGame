@@ -23,8 +23,7 @@ public class SignUpServlet extends HttpServlet {
         this.accountService = accountService;
     }
 
-    public void doPost(HttpServletRequest request,
-                       HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("login");
         String password = request.getParameter("password");
 
