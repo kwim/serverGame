@@ -30,9 +30,9 @@ public class SignUpServlet extends HttpServlet {
 
         Map<String, Object> pageVariables = new HashMap<String,Object>();
         if (accountService.addUser(name, new UserProfile(name, password, ""))) {
-            pageVariables.put("signUpStatus", "New user <b> " + name + " </b>created");
+            pageVariables.put("regStatus", "New user <b> " + name + " </b>created");
         } else {
-            pageVariables.put("signUpStatus", "User with name:<b> " + name + "</b> already exists");
+            pageVariables.put("regStatus", "User with name:<b> " + name + "</b> already exists");
         }
 
         response.getWriter().println(PageGenerator.getPage("regstatus.html", pageVariables));
