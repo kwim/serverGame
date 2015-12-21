@@ -2,20 +2,24 @@ package servlets;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+
 
 /**
  * Created by zak on 14.11.2015.
  */
 public class AccountService {
 
-    private Map<String,UserProfile> users = new HashMap<String,UserProfile>();
+    private SimpleUsers users = new SimpleUsers();
     private Map<String,UserProfile> sessions = new HashMap<String,UserProfile>();
 
-    public boolean addUser(String name, UserProfile userProfile) {
-        if (users.containsKey(name))
-            return false;
-        users.put(name, userProfile);
-        return true;
+    public boolean addUser(UserProfile userProfile)
+    {
+        Optional<Integer> res = users.AddUser(userProfile);
+
+        if (res.isPresent() && res.get() > 0)
+            return true;
+        return false;
     }
 
     public void addSession(String sessionID, UserProfile userProfile) {
@@ -23,7 +27,7 @@ public class AccountService {
     }
 
     public UserProfile getUser(String userName) {
-        return users.get(userName);
+        return users.FindUserByLogin(userName);
     }
 
     public UserProfile getSession(String sessionID) {

@@ -28,7 +28,7 @@ public class SignUpServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         Map<String, Object> pageVariables = new HashMap<String,Object>();
-        if (accountService.addUser(name, new UserProfile(name, password, ""))) {
+        if (accountService.addUser(new UserProfile(name, password, ""))) {
             pageVariables.put("regStatus", "New user <b> " + name + " </b>created");
         } else {
             pageVariables.put("regStatus", "User with name:<b> " + name + "</b> already exists");
