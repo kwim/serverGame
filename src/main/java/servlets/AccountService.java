@@ -1,5 +1,7 @@
 package servlets;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -28,6 +30,10 @@ public class AccountService {
 
     public UserProfile getUser(String userName) {
         return users.FindUserByLogin(userName);
+    }
+
+    public List<UserProfile> getAllUsers() {
+        return users.FindAllUsers();
     }
 
     public UserProfile getSession(String sessionID) {

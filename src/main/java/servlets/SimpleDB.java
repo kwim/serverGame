@@ -16,6 +16,10 @@ public class SimpleDB
         stmt = s.getStmt();
     }
 
+    public boolean isClosed(){
+        return stmt == null;
+    }
+
     public ResultSet ExecSelect(String query)
     {
         try
