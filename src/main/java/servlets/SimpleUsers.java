@@ -21,23 +21,23 @@ public class SimpleUsers
                                 "b8876401");
     }
 
-    public UserProfile FindUserByLogin(String login)
+    public Optional<UserProfile> FindUserByLogin(String login)
     {
         ResultSet rs = NiceDB.ExecSelect("select * from Accounts where Login = '" + login +"'");
 
         try
         {
             if (rs != null && rs.next())
-                return new UserProfile(rs.getString("Login"), rs.getString("Pass"), "");
+                return Optional.of(new UserProfile (rs.getString("Login"), rs.getString("Pass"), ""));
             else
-                return null;
+                return Optional.of(new UserProfile (null, null, null));
         }
         catch (SQLException ex)
         {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
-            return null;
+            return Optional.empty();
         }
     }
 

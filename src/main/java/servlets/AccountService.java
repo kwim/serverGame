@@ -2,6 +2,7 @@ package servlets;
 
 import redis.clients.jedis.Jedis;
 
+import java.io.OptionalDataException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
@@ -26,7 +27,7 @@ public class AccountService {
         return false;
     }
 
-    public UserProfile getUser(String userName)
+    public Optional<UserProfile> getUser(String userName)
     {
         return users.FindUserByLogin(userName);
     }
