@@ -30,20 +30,13 @@ public class AdminServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String method = request.getParameter("method");
 
-        switch (method){
+        if(method.equals("deleteUser")){
+            String login = request.getParameter("login");
 
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().println(accountService.DelUsers(login));
+        }else{
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
-
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().println("123");
-        //Map<String, Object> pageVariables = new HashMap<String, Object>();
-        //UserProfile profile = accountService.getUser(login);
-
-//        if (profile != null && profile.getPassword().equals(password)) {
-  //          pageVariables.put("loginStatus", "You have successfully logged");
-    //    } else {
-      //      pageVariables.put("loginStatus", "Wrong login/password");
-        //}
-        //response.getWriter().println(PageGenerator.getPage("authstatus.html", pageVariables));
     }
 }

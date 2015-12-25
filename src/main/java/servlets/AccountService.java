@@ -32,6 +32,15 @@ public class AccountService {
         return users.FindUserByLogin(userName);
     }
 
+    public boolean DelUsers(String login) {
+        Optional<Integer> res = users.DelUsers(login);
+
+        if (res.isPresent() && res.get() > 0){
+            return true;
+        }
+        return false;
+    }
+
     public List<UserProfile> getAllUsers() {
         return users.FindAllUsers();
     }

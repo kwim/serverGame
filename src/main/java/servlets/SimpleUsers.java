@@ -87,13 +87,13 @@ public class SimpleUsers
         return result;
     }
 
-    public Optional<Integer> DelUsers(String[] logins)
+    public Optional<Integer> DelUsers(String login)
     {
         checkDB();
-        if (logins.length < 1)
+        if (login.isEmpty())
             return Optional.empty();
 
-        Optional<Integer> result = NiceDB.ExecUpdate("delete from Accounts where Login in ('" + String.join("', '", logins) + "')");
+        Optional<Integer> result = NiceDB.ExecUpdate("delete from Accounts where Login in ('" + String.join("', '", login) + "')");
         return result;
     }
 
