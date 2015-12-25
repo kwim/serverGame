@@ -1,8 +1,12 @@
+table{
+    margin: 24px auto;
+    width: 80% !important;
+}
 table tr td .delete{
     float: right;
     background: url('img/delete.png') no-repeat 0;
     visibility: hidden;
-    width: 24px;
+    width: 18px;
     height: 24px;
     cursor: pointer;
 }
