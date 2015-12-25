@@ -1,5 +1,7 @@
 package servlets;
 
+import redis.clients.jedis.Jedis;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
@@ -24,11 +26,13 @@ public class AccountService {
         return false;
     }
 
-    public UserProfile getUser(String userName) {
+    public UserProfile getUser(String userName)
+    {
         return users.FindUserByLogin(userName);
     }
 
-    public boolean DelUsers(String login) {
+    public boolean DelUsers(String login)
+    {
         Optional<Integer> res = users.DelUsers(login);
 
         if (res.isPresent() && res.get() > 0){
@@ -37,15 +41,28 @@ public class AccountService {
         return false;
     }
 
-    public List<UserProfile> getAllUsers() {
+    public List<UserProfile> getAllUsers()
+    {
         return users.FindAllUsers();
     }
 
-    public void addSession(String sessionID, String login) {
-        sessions.put(sessionID, login);
+    public boolean addSession(String sessionID, String login)
+    {
+        Jedis red = new Jedis("localhost");
+        red.connect();
+
+        if(red.isConnected() && red.hset("SStorage", sessionID, login) > 0)
+            return true;
+        return false;
     }
 
-    public String getSession(String sessionID) {
-        return sessions.get(sessionID);
+    public String getSession(String sessionID)
+    {
+        Jedis red = new Jedis("localhost");
+        red.connect();
+
+        if(red.isConnected())
+            return red.hget("SStorage", sessionID);
+        return null;
     }
 }
