@@ -24,16 +24,16 @@ public class AccountService {
         return false;
     }
 
-    public void addSession(String sessionID, UserProfile userProfile) {
-        sessions.put(sessionID,userProfile);
-    }
-
     public UserProfile getUser(String userName) {
         return users.FindUserByLogin(userName);
     }
 
     public List<UserProfile> getAllUsers() {
         return users.FindAllUsers();
+    }
+
+    public void addSession(String sessionID, UserProfile userProfile) {
+        sessions.put(sessionID,userProfile);
     }
 
     public UserProfile getSession(String sessionID) {

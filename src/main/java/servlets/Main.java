@@ -3,6 +3,7 @@ package servlets;
 import frontend.SignInServlet;
 import frontend.SignUpServlet;
 import frontend.AdminServlet;
+import frontend.IndexServlet;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
@@ -21,15 +22,18 @@ public class Main {
         System.out.append("Starting at port: ").append(String.valueOf(port));
 
         AccountService accountService = new AccountService();
+
         Servlet signin = new SignInServlet(accountService);
         Servlet signup = new SignUpServlet(accountService);
         Servlet admin = new AdminServlet(accountService);
+        Servlet index = new IndexServlet(accountService);
 
 
-        ServletContextHandler  context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(signin), "/auth/signin");
         context.addServlet(new ServletHolder(signup), "/auth/signup");
         context.addServlet(new ServletHolder(admin), "/admin");
+        context.addServlet(new ServletHolder(index), "/");
 
         ResourceHandler resource_handler = new ResourceHandler();
         resource_handler.setDirectoriesListed(true);

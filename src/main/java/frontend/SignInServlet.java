@@ -3,6 +3,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +35,13 @@ public class SignInServlet  extends HttpServlet {
         String password = request.getParameter("password");
         response.setStatus(HttpServletResponse.SC_OK);
         Map<String, Object> pageVariables = new HashMap<String, Object>();
-        UserProfile profile = accountService.getUser(login);
+
+        HttpSession session = request.getSession();
+        UserProfile profile = accountService.getSession(session.getId());
+        if (profile == null){
+            profile = accountService.getUser(login);
+            accountService.addSession(session.getId(), profile);
+        }
 
         if (profile != null && profile.getPassword().equals(password)) {
             pageVariables.put("loginStatus", "You have successfully logged");
