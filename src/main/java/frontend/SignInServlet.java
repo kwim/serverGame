@@ -21,29 +21,35 @@ public class SignInServlet  extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setStatus(HttpServletResponse.SC_OK);
-        Map<String, Object> pageVariables = new HashMap<String,Object>();
-
-        pageVariables.put("login", request.getParameter("login") != null ? request.getParameter("login") : "");
-        pageVariables.put("password", request.getParameter("password") != null ?  request.getParameter("password") : "");
-
-        response.getWriter().println(PageGenerator.getPage("authresponse.txt", pageVariables));
+        this.doPost(request, response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
         response.setStatus(HttpServletResponse.SC_OK);
         Map<String, Object> pageVariables = new HashMap<String, Object>();
-
         HttpSession session = request.getSession();
-        UserProfile profile = accountService.getSession(session.getId());
-        if (profile == null){
+        String login = accountService.getSession(session.getId());
+        String password;
+        UserProfile profile;
+
+        boolean isSuccess = true;
+
+        if (login == null){
+            login = request.getParameter("login");
+            password = request.getParameter("password");
             profile = accountService.getUser(login);
-            accountService.addSession(session.getId(), profile);
+            if (profile != null && profile.getPassword().equals(password)) {
+                accountService.addSession(session.getId(), login);
+            }
+            else {
+                isSuccess = false;
+            }
+        }
+        else {
+            profile = accountService.getUser(login);
         }
 
-        if (profile != null && profile.getPassword().equals(password)) {
+        if (isSuccess) {
             pageVariables.put("loginStatus", "You have successfully logged");
         } else {
             pageVariables.put("loginStatus", "Wrong login/password");

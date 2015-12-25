@@ -16,7 +16,6 @@ import java.util.Map;
 
 public class IndexServlet extends HttpServlet {
     private AccountService accountService;
-    private static boolean count;
 
     public IndexServlet(AccountService accountService) {
         this.accountService = accountService;
@@ -25,24 +24,14 @@ public class IndexServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setStatus(HttpServletResponse.SC_OK);
         HttpSession session = request.getSession();
-        UserProfile profile = accountService.getSession(session.getId());
 
-        if (profile == null){
-            /*if(!count){
-                response.getWriter().println(PageGenerator.getPage("index.html", pageVariables));
-                System.out.println("1");
-                count = true;
-            }
-            else {
-                return;
-            }*/
+        if (accountService.getSession(session.getId()) == null){
             response.getWriter().println(PageGenerator.getPage("index.html", new HashMap<String, Object>()));
-            System.out.println("1");
         }
-        /*else{
-            response.sendRedirect(request.getContextPath() + "/index.html");
-            System.out.println("2");
-        }*/
+        else {
+            //request.getServletContext().getRequestDispatcher("/auth/signin").forward(request, response);
+            response.sendRedirect("/auth/signin");
+        }
 
         return;
     }

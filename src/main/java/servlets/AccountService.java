@@ -13,7 +13,7 @@ import java.util.Optional;
 public class AccountService {
 
     private SimpleUsers users = new SimpleUsers();
-    private Map<String,UserProfile> sessions = new HashMap<String,UserProfile>();
+    private Map<String,String> sessions = new HashMap<String,String>();
 
     public boolean addUser(UserProfile userProfile)
     {
@@ -32,11 +32,11 @@ public class AccountService {
         return users.FindAllUsers();
     }
 
-    public void addSession(String sessionID, UserProfile userProfile) {
-        sessions.put(sessionID,userProfile);
+    public void addSession(String sessionID, String login) {
+        sessions.put(sessionID, login);
     }
 
-    public UserProfile getSession(String sessionID) {
+    public String getSession(String sessionID) {
         return sessions.get(sessionID);
     }
 }
