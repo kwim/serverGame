@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <title>Admin panel</title>
     <link rel="stylesheet" type="text/css" href="/css/admin.css">
+    <script src="/js/jquery.js"></script>
+    <script src="/js/admin.js"></script>
 </head>
 <body>
-    <table border="1" cellspacing="0" cols="3">
+    <table id="userTable" border="1" cellspacing="0" cols="3">
         <colgroup>
             <col width="50">
             <col>
@@ -19,7 +21,7 @@
                 <th>Password</th>
             </tr>
             <#list users as user>
-                <tr>
+                <tr key="${user.login}">
                     <td>${user_index + 1}</td>
                     <td>${user.login}</td>
                     <td>${user.password}</td>
