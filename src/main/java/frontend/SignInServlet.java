@@ -41,7 +41,7 @@ public class SignInServlet  extends HttpServlet {
 
             //TODO
             if (profile == null){
-                pageVariables.put("loginStatus", "DB opyat' otvalilas'.");
+                pageVariables.put("login", "DB opyat' otvalilas'.");
                 return;
             }
 
@@ -57,9 +57,9 @@ public class SignInServlet  extends HttpServlet {
         }
 
         if (isSuccess) {
-            pageVariables.put("loginStatus", "You have successfully logged");
+            pageVariables.put("login", login);
         } else {
-            pageVariables.put("loginStatus", "Wrong login/password");
+            response.sendRedirect("/");
         }
 
         response.getWriter().println(PageGenerator.getPage("authstatus.html", pageVariables));

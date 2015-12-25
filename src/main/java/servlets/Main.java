@@ -31,8 +31,8 @@ public class Main {
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(index), "/");
-        context.addServlet(new ServletHolder(signin), "/auth/signin");
-        context.addServlet(new ServletHolder(signup), "/auth/signup");
+        context.addServlet(new ServletHolder(signin), "/signin");
+        context.addServlet(new ServletHolder(signup), "/signup");
         context.addServlet(new ServletHolder(admin), "/admin");
 
 

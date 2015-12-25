@@ -29,8 +29,7 @@ public class IndexServlet extends HttpServlet {
             response.getWriter().println(PageGenerator.getPage("index.html", new HashMap<String, Object>()));
         }
         else {
-            //request.getServletContext().getRequestDispatcher("/auth/signin").forward(request, response);
-            response.sendRedirect("/auth/signin");
+            response.sendRedirect("/signin");
         }
 
         return;
