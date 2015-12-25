@@ -26,4 +26,17 @@ public class AdminServlet extends HttpServlet {
         pageVariables.put("users", accountService.getAllUsers());
         response.getWriter().println(PageGenerator.getPage("admin.html", pageVariables));
     }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String method = request.getParameter("method");
+
+        if(method.equals("deleteUser")){
+            String login = request.getParameter("login");
+
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().println(accountService.DelUsers(login));
+        }else{
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
+    }
 }

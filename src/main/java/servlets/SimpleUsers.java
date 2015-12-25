@@ -3,6 +3,7 @@ package servlets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -40,13 +41,13 @@ public class SimpleUsers
         }
     }
 
-    public ArrayList<UserProfile> FindAllUsers()
+    public List<UserProfile> FindAllUsers()
     {
-        ArrayList<UserProfile> result = new ArrayList<UserProfile>();
+        List<UserProfile> result = new ArrayList<UserProfile>();
         ResultSet rs = NiceDB.ExecSelect("select * from Accounts");
 
         if (rs == null)
-            return null;
+            return result;
 
         try
         {
@@ -72,12 +73,12 @@ public class SimpleUsers
         return result;
     }
 
-    public Optional<Integer> DelUsers(String[] logins)
+    public Optional<Integer> DelUsers(String login)
     {
-        if (logins.length < 1)
+        if (login.isEmpty())
             return Optional.empty();
 
-        Optional<Integer> result = NiceDB.ExecUpdate("delete from Accounts where Login in ('" + String.join("', '", logins) + "')");
+        Optional<Integer> result = NiceDB.ExecUpdate("delete from Accounts where Login in ('" + String.join("', '", login) + "')");
         return result;
     }
 

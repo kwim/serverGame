@@ -22,7 +22,13 @@
 }
 
 body {
-	background: url('ignasi_pattern_s.png');
+	background: url('img/ignasi_pattern_s.png');
 	font-family: Calibri, PT Sans;
 	color: #333;
+}
+
+.admin-button-container{
+    position: absolute;
+    top: 40px;
+    right: 40px;
 }
