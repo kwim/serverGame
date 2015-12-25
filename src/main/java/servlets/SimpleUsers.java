@@ -13,28 +13,16 @@ public class SimpleUsers
 {
     private SimpleDB NiceDB = null;
 
-    private SimpleDB connectDB(){
-        return new SimpleDB("jdbc:mysql://eu-cdbr-azure-west-d.cloudapp.net",
-                "NiceDB",
-                "b7669db42d93ae",
-                "b8876401");
-    }
-
-    private void checkDB(){
-        //проверка, что подключение есть и оно не закрыто
-        if(NiceDB == null || NiceDB.isClosed()){
-            NiceDB = connectDB();
-        }
-    }
-
     public SimpleUsers()
     {
-        NiceDB = connectDB();
+        NiceDB = new SimpleDB("jdbc:mysql://eu-cdbr-azure-west-d.cloudapp.net",
+                                "NiceDB",
+                                "b7669db42d93ae",
+                                "b8876401");
     }
 
     public UserProfile FindUserByLogin(String login)
     {
-        checkDB();
         ResultSet rs = NiceDB.ExecSelect("select * from Accounts where Login = '" + login +"'");
 
         try
@@ -55,7 +43,6 @@ public class SimpleUsers
 
     public List<UserProfile> FindAllUsers()
     {
-        checkDB();
         List<UserProfile> result = new ArrayList<UserProfile>();
         ResultSet rs = NiceDB.ExecSelect("select * from Accounts");
 
@@ -81,7 +68,6 @@ public class SimpleUsers
 
     public Optional<Integer> AddUser(UserProfile uprof)
     {
-        checkDB();
         Optional<Integer> result = NiceDB.ExecUpdate("insert into Accounts (Login, Pass) values" +
                                                      "('" + uprof.getLogin() + "', '" + uprof.getPassword() + "');");
         return result;
@@ -89,7 +75,6 @@ public class SimpleUsers
 
     public Optional<Integer> DelUsers(String login)
     {
-        checkDB();
         if (login.isEmpty())
             return Optional.empty();
 
@@ -99,7 +84,6 @@ public class SimpleUsers
 
     public Optional<Integer> ChangePass(String login, String newPass)
     {
-        checkDB();
         Optional<Integer> result = NiceDB.ExecUpdate("update Accounts set Pass='" + newPass + "' where Login='" + login + "'");
         return result;
     }
