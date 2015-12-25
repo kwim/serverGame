@@ -11,4 +11,8 @@ $(function(){
     $('.auth-button').click(function(){
         showForm(false);
     });
+
+    $('.admin-button').click(function(){
+        location = '/admin';
+    });
 });
