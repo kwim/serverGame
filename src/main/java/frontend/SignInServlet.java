@@ -54,7 +54,7 @@ public class SignInServlet  extends HttpServlet
                 return;
             }
 
-            if(profile.get().getPassword().equals(password))
+            if(profile.get().getLogin() != null && profile.get().getPassword().equals(password))
                 accountService.addSession(session.getId(), login);
             else
                 isSuccess = false;
