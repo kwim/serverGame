@@ -3,6 +3,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,36 +21,45 @@ public class SignInServlet  extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setStatus(HttpServletResponse.SC_OK);
-        Map<String, Object> pageVariables = new HashMap<String,Object>();
-
-        pageVariables.put("login", request.getParameter("login") != null ? request.getParameter("login") : "");
-        pageVariables.put("password", request.getParameter("password") != null ?  request.getParameter("password") : "");
-
-        response.getWriter().println(PageGenerator.getPage("authresponse.txt", pageVariables));
+        this.doPost(request, response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
         response.setStatus(HttpServletResponse.SC_OK);
         Map<String, Object> pageVariables = new HashMap<String, Object>();
-        UserProfile profile = accountService.getUser(login);
+        HttpSession session = request.getSession();
+        String login = accountService.getSession(session.getId());
+        String password;
+        UserProfile profile;
 
-        if(profile == null)
-        {
-            pageVariables.put("loginStatus", "DB opyat' otvalilas'.");
+        boolean isSuccess = true;
+
+        if (login == null){
+            login = request.getParameter("login");
+            password = request.getParameter("password");
+            profile = accountService.getUser(login);
+
+            //TODO
+            if (profile == null){
+                pageVariables.put("loginStatus", "DB opyat' otvalilas'.");
+                return;
+            }
+
+            if (profile.getPassword().equals(password)) {
+                accountService.addSession(session.getId(), login);
+            }
+            else {
+                isSuccess = false;
+            }
         }
-        else
-        {
-            if(profile.getPassword().equals(password))
-            {
-                pageVariables.put("loginStatus", "You have successfully logged");
-            }
-            else
-            {
-                pageVariables.put("loginStatus", "Wrong login/password");
-            }
+        else {
+            profile = accountService.getUser(login);
+        }
+
+        if (isSuccess) {
+            pageVariables.put("loginStatus", "You have successfully logged");
+        } else {
+            pageVariables.put("loginStatus", "Wrong login/password");
         }
 
         response.getWriter().println(PageGenerator.getPage("authstatus.html", pageVariables));
