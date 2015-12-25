@@ -8,23 +8,18 @@ import java.util.Optional;
  */
 public class SimpleDB
 {
-    private Statement stmt = null;
+    private SimpleStatement stmt = null;
 
     public SimpleDB(String host, String DB, String login, String pass)
     {
-        SimpleStatement s = new SimpleStatement(host, DB, login, pass);
-        stmt = s.getStmt();
-    }
-
-    public boolean isClosed(){
-        return stmt == null;
+        stmt = new SimpleStatement(host, DB, login, pass);
     }
 
     public ResultSet ExecSelect(String query)
     {
         try
         {
-            return stmt.executeQuery(query);
+            return stmt.getStmt().executeQuery(query);
         }
         catch (SQLException ex)
         {
@@ -44,7 +39,7 @@ public class SimpleDB
     {
         try
         {
-            return Optional.of(stmt.executeUpdate(query));
+            return Optional.of(stmt.getStmt().executeUpdate(query));
         }
         catch (SQLException ex)
         {
@@ -65,23 +60,29 @@ class SimpleStatement
 {
     private Statement stmt = null;
 
+    private String mHost, mDB, mUser, mPass;
+
     public SimpleStatement(String host, String DB, String user, String pass)
+    {
+        mHost = host; mDB = DB; mUser = user; mPass = pass;
+    }
+
+    public Statement getStmt()
     {
         try
         {
-            Connection conn = DriverManager.getConnection(host + '/' + DB, user, pass);
-            stmt = conn.createStatement();
+            if (stmt == null || stmt.isClosed())
+            {
+                Connection conn = DriverManager.getConnection(mHost + '/' + mDB, mUser, mPass);
+                stmt = conn.createStatement();
+            }
         }
-        catch (SQLException ex)
+        catch(SQLException ex)
         {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
-    }
-
-    public Statement getStmt()
-    {
         return  stmt;
     }
 }

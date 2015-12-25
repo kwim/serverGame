@@ -36,11 +36,22 @@ public class SignInServlet  extends HttpServlet {
         Map<String, Object> pageVariables = new HashMap<String, Object>();
         UserProfile profile = accountService.getUser(login);
 
-        if (profile != null && profile.getPassword().equals(password)) {
-            pageVariables.put("loginStatus", "You have successfully logged");
-        } else {
-            pageVariables.put("loginStatus", "Wrong login/password");
+        if(profile == null)
+        {
+            pageVariables.put("loginStatus", "DB opyat' otvalilas'.");
         }
+        else
+        {
+            if(profile.getPassword().equals(password))
+            {
+                pageVariables.put("loginStatus", "You have successfully logged");
+            }
+            else
+            {
+                pageVariables.put("loginStatus", "Wrong login/password");
+            }
+        }
+
         response.getWriter().println(PageGenerator.getPage("authstatus.html", pageVariables));
     }
 }
