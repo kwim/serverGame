@@ -21,10 +21,6 @@ public class SignInServlet  extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        this.doPost(request, response);
-    }
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setStatus(HttpServletResponse.SC_OK);
         Map<String, Object> pageVariables = new HashMap<String, Object>();
         HttpSession session = request.getSession();
@@ -63,5 +59,17 @@ public class SignInServlet  extends HttpServlet {
         }
 
         response.getWriter().println(PageGenerator.getPage("authstatus.html", pageVariables));
+    }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String method = request.getParameter("method");
+
+        if(method.equals("signOut")){
+            HttpSession session = request.getSession();
+            String sessionId = session.getId();
+            session.invalidate();
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().println(accountService.delSession(sessionId));
+        }
     }
 }

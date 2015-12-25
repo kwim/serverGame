@@ -1,0 +1,19 @@
+body {
+	background: url('img/ignasi_pattern_s.png');
+	font-family: Calibri, PT Sans;
+	color: #333;
+}
+
+.main_container {
+    margin: 210px auto;
+    display: table;
+    color: #50516F;
+    font-size: 24px;
+    font-style: italic;
+}
+
+.signOut {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+}

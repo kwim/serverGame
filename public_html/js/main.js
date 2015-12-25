@@ -2,7 +2,7 @@ $(function(){
     var showForm = function(isReg){
         $('.form-container').show();
         $('.form').attr('action', isReg ? 'signup' : 'signin');
-        $('.form-button').text(isReg ? 'Зарегестрироваться' : 'Войти');
+        $('.form-button').text(isReg ? 'Sign in' : 'Sign up');
     };
     $('.reg-button').click(function(){
         showForm(true);

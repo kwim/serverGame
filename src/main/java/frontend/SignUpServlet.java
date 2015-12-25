@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by zak on 14.11.2015.
@@ -23,18 +24,21 @@ public class SignUpServlet extends HttpServlet {
         this.accountService = accountService;
     }
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("login");
         String password = request.getParameter("password");
+        HttpSession session = request.getSession();
 
         Map<String, Object> pageVariables = new HashMap<String,Object>();
         if (accountService.addUser(new UserProfile(name, password, ""))) {
-            pageVariables.put("regStatus", "New user <b> " + name + " </b>created");
+            accountService.addSession(session.getId(), name);
+            response.sendRedirect("/signin");
         } else {
             pageVariables.put("regStatus", "User with name:<b> " + name + "</b> already exists");
+            response.getWriter().println(PageGenerator.getPage("regstatus.html", pageVariables));
         }
 
-        response.getWriter().println(PageGenerator.getPage("regstatus.html", pageVariables));
+
         response.setStatus(HttpServletResponse.SC_OK);
     }
 }

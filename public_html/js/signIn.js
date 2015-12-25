@@ -1,5 +1,14 @@
 $(function(){
     $('.signOut').click(function(){
-    alert(123);
+        $.ajax({
+            type: "POST",
+            url: "",
+            data: "method=signOut",
+            success: function(answer){
+                if(answer){
+                    location = '/index.html';
+                }
+            }
+        });
     });
 });

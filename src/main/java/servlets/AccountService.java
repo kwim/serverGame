@@ -15,7 +15,6 @@ import java.util.Optional;
 public class AccountService {
 
     private SimpleUsers users = new SimpleUsers();
-    private Map<String,String> sessions = new HashMap<String,String>();
 
     public boolean addUser(UserProfile userProfile)
     {
@@ -64,5 +63,15 @@ public class AccountService {
         if(red.isConnected())
             return red.hget("SStorage", sessionID);
         return null;
+    }
+
+    public boolean delSession(String sessionID)
+    {
+        Jedis red = new Jedis("localhost");
+        red.connect();
+
+        if(red.isConnected() && red.hdel("SStorage", sessionID) > 0)
+            return true;
+        return false;
     }
 }

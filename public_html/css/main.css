@@ -2,23 +2,18 @@
 	margin-right: 8px;
 }
 
-.buttons-container {
-	margin-bottom: 8px;
-
-}
-
 .form-container {
 	display: none;
 }
 .buttons-container, .form-container {
 	margin: 0 auto;
 	width: 400px;
-	margin-top: 100px;
-	
 }
 
 .buttons-container {
-	width: 222px;
+	width: 197px;
+	margin-top: 124px;
+	margin-bottom: 16px;
 }
 
 body {
@@ -29,6 +24,6 @@ body {
 
 .admin-button-container{
     position: absolute;
-    top: 40px;
-    right: 40px;
+    top: 16px;
+    right: 16px;
 }
