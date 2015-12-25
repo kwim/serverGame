@@ -38,7 +38,14 @@ public class SignInServlet  extends HttpServlet {
             login = request.getParameter("login");
             password = request.getParameter("password");
             profile = accountService.getUser(login);
-            if (profile != null && profile.getPassword().equals(password)) {
+
+            //TODO
+            if (profile == null){
+                pageVariables.put("loginStatus", "DB opyat' otvalilas'.");
+                return;
+            }
+
+            if (profile.getPassword().equals(password)) {
                 accountService.addSession(session.getId(), login);
             }
             else {
@@ -54,6 +61,7 @@ public class SignInServlet  extends HttpServlet {
         } else {
             pageVariables.put("loginStatus", "Wrong login/password");
         }
+
         response.getWriter().println(PageGenerator.getPage("authstatus.html", pageVariables));
     }
 }
