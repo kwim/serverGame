@@ -1,8 +1,7 @@
 $(function(){
     var showForm = function(isReg){
-        $('.form-container').show();
         $('.form').attr('action', isReg ? 'signup' : 'signin');
-        $('.form-button').text(isReg ? 'Sign in' : 'Sign up');
+        $('.form-button').text(isReg ? 'Sign up' : 'Sign in');
     };
     $('.reg-button').click(function(){
         showForm(true);

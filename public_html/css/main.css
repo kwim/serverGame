@@ -2,9 +2,6 @@
 	margin-right: 8px;
 }
 
-.form-container {
-	display: none;
-}
 .buttons-container, .form-container {
 	margin: 0 auto;
 	width: 400px;

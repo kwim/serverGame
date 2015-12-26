@@ -26,7 +26,7 @@ public class IndexServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         if (accountService.getSession(session.getId()) == null){
-            response.getWriter().println(PageGenerator.getPage("index.html", new HashMap<String, Object>()));
+            response.getWriter().println(PageGenerator.getPage("main.html", new HashMap<String, Object>()));
         }
         else {
             response.sendRedirect("/signin");
